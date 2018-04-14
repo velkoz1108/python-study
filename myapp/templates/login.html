@@ -1,0 +1,53 @@
+{% extends "base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}"/>
+    {{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+    {% if form.errors and not form.non_field_errors %}
+        <p class="errornote">
+            {% if form.errors.items|length == 1 %}{% trans "Please correct the error below." %}{% else %}
+                {% trans "Please correct the errors below." %}{% endif %}
+        </p>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <p class="errornote">
+                {{ error }}
+            </p>
+        {% endfor %}
+    {% endif %}
+
+    <div id="content-main">
+
+        {% if user.is_authenticated %}
+            <p class="errornote">
+                {% blocktrans trimmed %}
+                    You are authenticated as {{ username }}, but are not authorized to
+                    access this page. Would you like to login to a different account?
+                {% endblocktrans %}
+            </p>
+        {% endif %}
+
+        <form action="{% url 'login' %}" method="post" id="login-form">{% csrf_token %}
+            <input type="text" name="username" id="username" placeholder="手机号码">
+            <input type="password" name="password" id="password" placeholder="登陆密码" value="">
+            <input type="submit" value="立即登录">
+        </form>
+
+    </div>
+{% endblock %}

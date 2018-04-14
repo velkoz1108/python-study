@@ -1,12 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>学习Python</title>
-</head>
-<body>
+{% extends "base_site.html" %}
+{% load i18n static %}
 
-<a href="{% url 'add2' 4 5 %}">计算 4+5</a>
-<a href="/add2/4/5">(old)计算 4+5</a>
+{% block extrastyle %}{{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}"/>{% endblock %}
 
-</body>
-</html>
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+    <div id="content-main">
+
+        {% if request.user.is_authenticated %}
+            {{ request.user.username }}，您好！
+        {% else %}
+            <a href="/admin">请登陆</a>
+        {% endif %}<br/>
+        {{ request.user }}<br/>
+        <a href="{% url 'add2' 4 5 %}">计算 4+5</a>
+        <a href="/add2/4/5">(old)计算 4+5</a>
+        <br/>
+        {% for i in list %}
+            {{ i }}{% if not forloop.last %},{% endif %}
+        {% endfor %}
+
+
+    </div>
+{% endblock %}
+
+
+
+
+

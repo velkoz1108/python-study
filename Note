@@ -7,3 +7,20 @@ python manage.py makemigrations
 python manage.py migrate
 旧版本的Django 1.6及以下用
 python manage.py syncdb
+
+
+创建模块
+django-admin startapp Test
+ # 让 Django 知道我们在我们的模型有一些变更
+python manage.py makemigrations Test
+# 创建表结构
+python manage.py migrate Test
+
+class Test(models.Model):
+    name = models.CharField(max_length=20)
+    picUrl = models.CharField(max_length=200)
+    creator = models.CharField(max_length=20)
+    modifier = models.CharField(max_length=20)
+    # DateTimeField、DateField和TimeField三种类型
+    creatdate = models.DateTimeField('保存日期', default=timezone.now())
+    modifydate = models.DateTimeField('最后修改日期', auto_now=True)

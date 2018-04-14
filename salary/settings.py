@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     #  新建的 app 如果不加到 INSTALL_APPS 中的话,
     #  django 就不能自动找到app中的模板文件(app-name/templates/下的文件)和静态文件(app-name/static/中的文件) ,
     'myapp',
+    'Test',
+    'Product',
 ]
 
 MIDDLEWARE = [
